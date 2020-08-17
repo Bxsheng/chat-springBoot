@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="cn.kdream.mapper.UsersMapperCustom" >
+
+  <select id="queryFriendsRequestList" resultType="cn.kdream.pojo.vo.FriendsRequestVo" parameterType="String">
+
+    select us.id as sendUserId, us.nickname as sendUserNick, us.username as sendUserName,
+    us.face_image as sendUserFaceImage
+    from friends_request as fr
+    left join users as us
+    on fr.send_user_id = us.id
+    where fr.accept_user_id =  #{acceptUserId}
+  </select>
+
+  <select id="queryFriendsList" resultType="cn.kdream.pojo.vo.FriendsVo" parameterType="String">
+    select us.id as friendUserId,us.username as friendUsername,
+       us.face_image as friendFaceImage,
+       us.nickname as friendNickname
+       from  my_friends as myf
+    left join users as us
+    on myf.my_friend_user_id = us.id
+    where myf.my_user_id = #{userId};
+  </select>
+
+  <update id="batchUpdateMsgSigned">
+    update chat_msg set sign_flag = 1 where id in
+    <foreach collection="list" item="item" index="index" open="(" separator="," close=")">
+      #{item}
+    </foreach>
+  </update>
+</mapper>

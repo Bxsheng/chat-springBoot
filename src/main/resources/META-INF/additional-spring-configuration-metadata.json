@@ -1,0 +1,8 @@
+{
+  "properties": [
+    {
+      "name": "ninio.url",
+      "type": "java.lang.String",
+      "description": "Description for ninio.url."
+  }
+] }
